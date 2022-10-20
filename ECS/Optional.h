@@ -5,9 +5,9 @@
 
 namespace ECS
 {
-	struct InvalidOptionExeption : std::exception
+	struct InvalidOptionalExeption : std::exception
 	{
-		InvalidOptionExeption(const char* message) : std::exception(message) {}
+		InvalidOptionalExeption(const char* message) : std::exception(message) {}
 	};
 
 	template<typename T>
@@ -21,7 +21,7 @@ namespace ECS
 			if (m_HasValue)
 				return *reinterpret_cast<T*>(&m_Data);
 			else
-				throw InvalidOptionExeption("Cannot access invalid option");
+				throw InvalidOptionalExeption("Cannot access invalid option");
 		}
 
 		const T& Get() const
@@ -29,10 +29,27 @@ namespace ECS
 			if (m_HasValue)
 				return *reinterpret_cast<const T*>(&m_Data);
 			else
-				throw InvalidOptionExeption("Cannot access invalid option");
+				throw InvalidOptionalExeption("Cannot access invalid option");
 		}
 
-		Optional() : m_HasValue(false) {}
+		T&& Get()&&
+		{
+			if (m_HasValue)
+				return std::move(*reinterpret_cast<const T*>(&m_Data));
+			else
+				throw InvalidOptionalExeption("Cannot access invalid option");
+		}
+
+		void Clear()
+		{
+			if (m_HasValue)
+			{
+				Get()->~T();
+				m_HasValue = false;
+			}
+		}
+
+		Optional() : m_HasValue(false), m_Data() {}
 		Optional(const T& obj) : m_HasValue(true)
 		{
 			new (reinterpret_cast<T*>(&m_Data)) T(obj);
@@ -62,6 +79,7 @@ namespace ECS
 					Get().~T();
 			}
 			m_HasValue = other.m_HasValue;
+			return *this;
 		}
 
 		Optional(Optional&& other) noexcept : m_HasValue(other.m_HasValue)

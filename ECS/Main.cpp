@@ -9,7 +9,7 @@ using namespace ECS::Utils;
 
 int main()
 {
-	using TestOption = Optional<std::string, true>;
+	using TestOption = Optional<std::string>;
 
 	TestOption option = std::string("Hello World!");
 	TestOption op2 = std::move(option);
