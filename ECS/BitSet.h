@@ -2,9 +2,19 @@
 #include <cstdint>
 #include <iostream>
 #include <sstream>
+#include "Utils/Func.h"
 
 namespace ECS
 {
+	template<size_t size>
+	class BitSet;
+
+	namespace Utils
+	{
+		template<size_t s>
+		BitSet<s> PerformOp(const BitSet<s>& a, const BitSet<s>& b, Utils::Func<char(char, char)> op);
+	}
+
 	template<size_t size>
 	class BitSet
 	{
@@ -55,12 +65,15 @@ namespace ECS
 			}
 		}
 
-		void Any()
+		bool Any()
 		{
 			for (size_t i = 0; i < GetByteCount(); i++)
 			{
-
+				if (m_Bytes[i] > 0)
+					return true;
 			}
+
+			return false;
 		}
 
 		bool Get(size_t index)
@@ -89,10 +102,7 @@ namespace ECS
 		friend BitSet<s> operator^(const BitSet<s>& a, const BitSet<s>& b);
 
 		template<size_t s>
-		friend BitSet<s> operator==(const BitSet<s>& a, const BitSet<s>& b);
-
-		template<size_t s>
-		friend BitSet<s> operator==(const BitSet<s>& a, const BitSet<s>& b);
+		friend BitSet<s> Utils::PerformOp(const BitSet<s>& a, const BitSet<s>& b, Utils::Func<char(char, char)> op);
 
 
 		char m_Bytes[GetByteCount()] = {};
@@ -101,13 +111,46 @@ namespace ECS
 	template<size_t s>
 	BitSet<s> operator&(const BitSet<s>& a, const BitSet<s>& b)
 	{
-		BitSet<s> bitset;
-		for (size_t i = 0; i < bitset.GetByteCount(); i++)
-		{
-			bitset.m_Bytes[i] = a.m_Bytes[i] & b.m_Bytes[i];
-		}
+		return Utils::PerformOp(a, b, [](char a, char b) -> char { return a & b; });
+	}
 
-		return bitset;
+	template<size_t s>
+	BitSet<s> operator|(const BitSet<s>& a, const BitSet<s>& b)
+	{
+		return Utils::PerformOp(a, b, [](char a, char b) -> char {return a | b; });
+	}
+
+	template<size_t s>
+	BitSet<s> operator^(const BitSet<s>& a, const BitSet<s>& b)
+	{
+		return Utils::PerformOp(a, b, [](char a, char b) -> char { return a ^ b; });
+	}
+
+	template<size_t s>
+	bool operator==(const BitSet<s>& a, const BitSet<s>& b)
+	{
+		return !(a ^ b).Any();
+	}
+
+	template<size_t s>
+	bool operator!=(const BitSet<s>& a, const BitSet<s>& b)
+	{
+		return !(a == b);
+	}
+
+	namespace Utils
+	{
+		template<size_t s>
+		BitSet<s> PerformOp(const BitSet<s>& a, const BitSet<s>& b, Utils::Func<char(char, char)> op)
+		{
+			BitSet<s> bitset;
+			for (size_t i = 0; i < bitset.GetByteCount(); i++)
+			{
+				bitset.m_Bytes[i] = op(a.m_Bytes[i], b.m_Bytes[i]);
+			}
+
+			return bitset;
+		}
 	}
 
 	template<size_t size>

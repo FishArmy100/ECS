@@ -136,6 +136,9 @@
     <ClInclude Include="Optional.h" />
     <ClInclude Include="Tuple.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Utils\Func.h" />
+    <ClInclude Include="Utils\Ref.h" />
+    <ClInclude Include="Utils\TypeTraits.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

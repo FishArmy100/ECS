@@ -16,7 +16,7 @@ namespace ECS
 	public:
 		bool HasValue() const { return m_HasValue; };
 
-		T& Get()
+		T& Get()&
 		{
 			if (m_HasValue)
 				return *reinterpret_cast<T*>(&m_Data);
@@ -24,7 +24,7 @@ namespace ECS
 				throw InvalidOptionalExeption("Cannot access invalid option");
 		}
 
-		const T& Get() const
+		const T& Get() const&
 		{
 			if (m_HasValue)
 				return *reinterpret_cast<const T*>(&m_Data);

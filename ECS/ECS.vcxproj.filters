@@ -35,5 +35,14 @@
     <ClInclude Include="Optional.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\TypeTraits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Func.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Ref.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

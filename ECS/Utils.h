@@ -5,51 +5,6 @@ namespace ECS
 {
 	namespace Utils
 	{
-		template<size_t index, typename TFirst, typename... Args>
-		struct TypeListIndexer
-		{
-			using Type = typename TypeListIndexer<index - 1, Args...>::Type;
-		};
-
-		template<typename TFirst, typename... Args>
-		struct TypeListIndexer<0, TFirst, Args...>
-		{
-			using Type = TFirst;
-		};
-
-
-		template<typename TFirst, typename TSecond>
-		struct IsSameInternal
-		{
-			bool Value = false;
-		};
-
-		template<typename T>
-		struct IsSameInternal<T, T>
-		{
-			bool Value = true;
-		};
-
-		template<typename TFirst, typename TSecond>
-		constexpr bool IsSame = IsSameInternal<TFirst, TSecond>().Value;
-
-		template<typename... TArgs>
-		struct AllUniqueTypesInternal;
-
-		template<typename T>
-		struct AllUniqueTypesInternal<T>
-		{
-			static constexpr bool Value = true;
-		};
-
-		template<typename TFirst, typename TSecond, typename... TRest>
-		struct AllUniqueTypesInternal<TFirst, TSecond, TRest...>
-		{
-			static constexpr bool Value = !IsSame<TFirst, TSecond> &&
-										  AllUniqueTypesInternal<TFirst, TRest...>::Value &&
-								          AllUniqueTypesInternal<TSecond, TRest...>::Value;
-		};
-
 		/*template<size_t size, size_t allignment>
 		struct Storage
 		{
