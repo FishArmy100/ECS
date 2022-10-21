@@ -55,6 +55,11 @@ namespace ECS
 			new (reinterpret_cast<T*>(&m_Data)) T(obj);
 		}
 
+		Optional(T&& obj) : m_HasValue(true)
+		{
+			new (reinterpret_cast<T*>(&m_Data)) T(std::move(obj));
+		}
+
 		Optional(const Optional& other) : m_HasValue(other.m_HasValue)
 		{
 			if(other.m_HasValue)

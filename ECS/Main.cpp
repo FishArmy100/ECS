@@ -11,5 +11,8 @@ using namespace ECS::Utils;
 int main()
 {
 	EnityData<std::string, int> data;
-	std::cout << data.HasComponent<int>();
+	data.AddComponent<std::string>("Hello World!");
+	std::cout << std::boolalpha 
+		<< data.HasComponents<std::string>() 
+		<< ", Number: " << data.GetComponent<std::string>();
 }

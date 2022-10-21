@@ -6,14 +6,64 @@
 
 namespace ECS
 {
+	struct ComponentAlreadyExistsExeption : std::exception {};
+	struct ComponentDoesNotExistExeption : std::exception {};
+
 	template<typename... TComponents>
 	class EnityData
 	{
+	private:
+		static constexpr size_t s_NumComponents = sizeof...(TComponents);
+
 	public:
 		template<typename... TArgs>
-		bool HasComponent()
+		bool HasComponents() const
 		{
-			return (HasComponentInternal<TArgs>() && ...);
+			constexpr size_t argCount = sizeof...(TArgs);
+			constexpr size_t indexes[argCount] = { IndexOf<TArgs>()... };
+
+			BitSet<s_NumComponents> checker;
+			for (int i = 0; i < argCount; i++)
+			{
+				checker.Set(indexes[i], true);
+			}
+
+			return HasComponentsInBitSet(checker);
+		}
+
+		bool HasComponentsInBitSet(BitSet<s_NumComponents> bitset) const
+		{
+			return (m_ComponentFlags & bitset) == bitset;
+		}
+
+		template<typename T, typename... TArgs>
+		T& AddComponent(TArgs&&... args)
+		{
+			constexpr size_t index = IndexOf<T>();
+			if (!m_Components.Get<index>().HasValue())
+			{
+				m_Components.Get<index>() = std::move(T(std::forward<TArgs>(args)...));
+				m_ComponentFlags.Set(index, true);
+				return m_Components.Get<index>().Get();
+			}
+			else
+			{
+				throw ComponentAlreadyExistsExeption();
+			}
+		}
+
+		template<typename T>
+		T& GetComponent()
+		{
+			constexpr size_t index = IndexOf<T>();
+			if (m_Components.Get<index>().HasValue())
+			{
+				return m_Components.Get<index>().Get();
+			}
+			else
+			{
+				throw ComponentDoesNotExistExeption();
+			}
 		}
 
 	private:
@@ -21,17 +71,10 @@ namespace ECS
 		static constexpr size_t IndexOf()
 		{
 			static_assert(Utils::ExistsInList<T, TComponents...>(), "Component must exist in components list");
-			return Utils::IndexOf<T>::InList<TComponents...>;
-		}
-
-		template<typename T>
-		bool HasComponentInternal()
-		{
-			return m_Components.Get<IndexOf<T>()>().HasValue();
+			return Utils::template IndexOf<T>::template InList<TComponents...>;
 		}
 
 	private:
-		static constexpr size_t s_NumComponents = sizeof...(TComponents);
 		BitSet<s_NumComponents> m_ComponentFlags;
 		Tuple<Optional<TComponents>...> m_Components;
 	};

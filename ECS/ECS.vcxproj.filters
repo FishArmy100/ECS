@@ -44,5 +44,8 @@
     <ClInclude Include="Utils\Ref.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EntityDataList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

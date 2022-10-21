@@ -31,7 +31,7 @@ namespace ECS
 
 	public:
 		BitSet() = default;
-		BitSet(char values[GetByteCount()])
+		BitSet(bool values[GetByteCount()])
 		{
 			for (int i = 0; i < GetByteCount(); i++)
 			{
