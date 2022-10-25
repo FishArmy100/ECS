@@ -131,13 +131,16 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Array.h" />
     <ClInclude Include="BitSet.h" />
     <ClInclude Include="EntityData.h" />
     <ClInclude Include="EntityDataList.h" />
+    <ClInclude Include="List.h" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="Tuple.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Utils\Func.h" />
+    <ClInclude Include="Utils\Pair.h" />
     <ClInclude Include="Utils\Ref.h" />
     <ClInclude Include="Utils\TypeTraits.h" />
   </ItemGroup>

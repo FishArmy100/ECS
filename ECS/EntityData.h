@@ -10,7 +10,7 @@ namespace ECS
 	struct ComponentDoesNotExistExeption : std::exception {};
 
 	template<typename... TComponents>
-	class EnityData
+	class EntityData
 	{
 	private:
 		static constexpr size_t s_NumComponents = sizeof...(TComponents);
@@ -34,6 +34,11 @@ namespace ECS
 		bool HasComponentsInBitSet(BitSet<s_NumComponents> bitset) const
 		{
 			return (m_ComponentFlags & bitset) == bitset;
+		}
+
+		BitSet<s_NumComponents> GetBitSet() const
+		{
+			return m_ComponentFlags;
 		}
 
 		template<typename T, typename... TArgs>

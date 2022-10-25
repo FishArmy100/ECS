@@ -4,15 +4,21 @@
 #include "Tuple.h"
 #include "Optional.h"
 #include "EntityData.h"
+#include "Array.h"
+#include "List.h"
+#include "EntityDataList.h"
 
 using namespace ECS;
 using namespace ECS::Utils;
 
+struct Pos
+{
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
+};
+
 int main()
 {
-	EnityData<std::string, int> data;
-	data.AddComponent<std::string>("Hello World!");
-	std::cout << std::boolalpha 
-		<< data.HasComponents<std::string>() 
-		<< ", Number: " << data.GetComponent<std::string>();
+	EntityDataList<std::string, Pos> list;
 }
