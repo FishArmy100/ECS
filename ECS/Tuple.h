@@ -1,5 +1,6 @@
 #pragma once
-#include "Utils.h"
+#include "Utils/TypeTraits.h"
+#include <tuple>
 
 namespace ECS
 {
@@ -60,5 +61,29 @@ namespace ECS
         {
             return static_cast<typename TupleLeafGetter<index, Args...>::LeafType*>(this)->Value;
         }
+
+        template <size_t index>
+        auto& get()& {
+            return static_cast<typename TupleLeafGetter<index, Args...>::LeafType*>(this)->Value;
+        }
+
+        template <size_t index>
+        auto const& get() const& {
+            return static_cast<typename TupleLeafGetter<index, Args...>::LeafType*>(this)->Value;
+        }
+
+        template <size_t index>
+        auto&& get()&& {
+            return std::move(static_cast<typename TupleLeafGetter<index, Args...>::LeafType*>(this)->Value);
+        }
     };
+}
+
+namespace std
+{
+    template<typename... TTypes>
+    struct tuple_size<ECS::Tuple<TTypes...>> : std::integral_constant<size_t, sizeof...(TTypes)> {};
+
+    template<size_t index, typename... TTypes>
+    struct tuple_element<index, ECS::Tuple<TTypes...>> { using type = ECS::Utils::TypeListIndexer<index, TTypes...>::Type; };
 }

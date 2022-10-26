@@ -95,6 +95,16 @@ namespace ECS
 			}
 		}
 
+	public:
+		template<typename... TViewComponents>
+		class View
+		{
+		public:
+
+		private:
+			Utils::Ref<EntityRegistry<TComponents...>> m_Registry;
+		};
+
 	private:
 		EntityId GetFirstInvalid()
 		{

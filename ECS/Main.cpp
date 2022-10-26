@@ -21,10 +21,14 @@ int main()
 {
 	std::cout << std::boolalpha;
 
-	EntityRegistry<std::string, Pos> list;
+	/*EntityRegistry<std::string, Pos> list;
 	EntityId e = list.CreateEntity();
 	std::string& name = list.AddComponent<std::string>(e, "Hello World!");
 	std::cout << list.GetComponent<std::string>(e) << "\n";
-	list.RemoveComponent<std::string>(e);
-	std::cout << list.HasComponent<std::string>(e) << "\n";
+	list.RemoveComponent<std::string>(e);*/
+
+	Tuple<std::string, int> t = Tuple<std::string, int>("Hello world!", 5);
+	auto& [m, i] = t;
+	m = "Goodbye!";
+	std::cout << t.Get<0>();
 }
