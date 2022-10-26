@@ -24,8 +24,8 @@ namespace ECS
 		using EntityData = Optional<Tuple<Optional<TComponents>...>>;
 	public:
 		EntityRegistry() = default;
-		EntityRegistry(const EntityDataList&) = delete;
-		EntityRegistry& operator=(const EntityDataList&) = delete;
+		EntityRegistry(const EntityRegistry&) = delete;
+		EntityRegistry& operator=(const EntityRegistry&) = delete;
 
 	public:
 		EntityId CreateEntity()
