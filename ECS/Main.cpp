@@ -5,7 +5,7 @@
 #include "Optional.h"
 #include "Array.h"
 #include "List.h"
-#include "EntityDataList.h"
+#include "EntityRegistry.h"
 
 using namespace ECS;
 using namespace ECS::Utils;
@@ -21,7 +21,7 @@ int main()
 {
 	std::cout << std::boolalpha;
 
-	EntityDataList<std::string, Pos> list;
+	EntityRegistry<std::string, Pos> list;
 	EntityId e = list.CreateEntity();
 	std::string& name = list.AddComponent<std::string>(e, "Hello World!");
 	std::cout << list.GetComponent<std::string>(e) << "\n";

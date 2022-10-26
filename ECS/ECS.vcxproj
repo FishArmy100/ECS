@@ -133,7 +133,7 @@
   <ItemGroup>
     <ClInclude Include="Array.h" />
     <ClInclude Include="BitSet.h" />
-    <ClInclude Include="EntityDataList.h" />
+    <ClInclude Include="EntityRegistry.h" />
     <ClInclude Include="EntityId.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Optional.h" />

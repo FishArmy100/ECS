@@ -41,7 +41,7 @@
     <ClInclude Include="Utils\Ref.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityDataList.h">
+    <ClInclude Include="EntityRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Array.h">

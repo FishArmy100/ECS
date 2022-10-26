@@ -13,7 +13,7 @@ namespace ECS
 	struct EntityDoesNotHaveComponentException : public std::exception {};
 
 	template<typename... TComponents>
-	class EntityDataList
+	class EntityRegistry
 	{
 	public:
 		static constexpr size_t NumberOfComponents() { return sizeof...(TComponents); }
@@ -23,9 +23,9 @@ namespace ECS
 		using TupleType = Tuple<Optional<TComponents>...>;
 		using EntityData = Optional<Tuple<Optional<TComponents>...>>;
 	public:
-		EntityDataList() = default;
-		EntityDataList(const EntityDataList&) = delete;
-		EntityDataList& operator=(const EntityDataList&) = delete;
+		EntityRegistry() = default;
+		EntityRegistry(const EntityDataList&) = delete;
+		EntityRegistry& operator=(const EntityDataList&) = delete;
 
 	public:
 		EntityId CreateEntity()
