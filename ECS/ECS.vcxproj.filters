@@ -29,9 +29,6 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Optional.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils\Pair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityId.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

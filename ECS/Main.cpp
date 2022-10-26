@@ -3,7 +3,6 @@
 #include "Utils.h"
 #include "Tuple.h"
 #include "Optional.h"
-#include "EntityData.h"
 #include "Array.h"
 #include "List.h"
 #include "EntityDataList.h"
@@ -20,5 +19,12 @@ struct Pos
 
 int main()
 {
+	std::cout << std::boolalpha;
+
 	EntityDataList<std::string, Pos> list;
+	EntityId e = list.CreateEntity();
+	std::string& name = list.AddComponent<std::string>(e, "Hello World!");
+	std::cout << list.GetComponent<std::string>(e) << "\n";
+	list.RemoveComponent<std::string>(e);
+	std::cout << list.HasComponent<std::string>(e) << "\n";
 }
