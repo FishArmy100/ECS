@@ -138,7 +138,6 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="Tuple.h" />
-    <ClInclude Include="Utils.h" />
     <ClInclude Include="Utils\Func.h" />
     <ClInclude Include="Utils\Pair.h" />
     <ClInclude Include="Utils\Ref.h" />

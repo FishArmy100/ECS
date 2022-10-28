@@ -1,10 +1,12 @@
 #pragma once
 #include "Optional.h"
 #include "List.h"
+#include "Array.h"
 #include "Utils/Pair.h"
 #include "Utils/Ref.h"
 #include "EntityId.h"
 #include "Utils/TypeTraits.h"
+#include <iterator>
 
 namespace ECS
 {
@@ -22,10 +24,14 @@ namespace ECS
 		using EntityFlags = Optional<ComponentFlags>;
 		using TupleType = Tuple<Optional<TComponents>...>;
 		using EntityData = Optional<Tuple<Optional<TComponents>...>>;
+
 	public:
 		EntityRegistry() = default;
 		EntityRegistry(const EntityRegistry&) = delete;
 		EntityRegistry& operator=(const EntityRegistry&) = delete;
+
+		template<typename... TViewComponents>
+		friend class View;
 
 	public:
 		EntityId CreateEntity()
@@ -33,7 +39,26 @@ namespace ECS
 			EntityId id = GetFirstInvalid();
 			m_ComponentDatas[id] = { TupleType{} };
 			m_Entities[id] = { ComponentFlags{} };
+			m_EntityCount++;
 			return id;
+		}
+
+		void DestroyEntity(EntityId id)
+		{
+			if (m_Entities[id].HasValue())
+			{
+				m_Entities[id].Get() = {};
+				m_ComponentDatas[id].Get() = {};
+			}
+			else
+			{
+				throw NullEntityException();
+			}
+		}
+
+		size_t EntityCount() const
+		{
+			return m_EntityCount;
 		}
 
 		template<typename T, typename... TArgs> 
@@ -99,11 +124,85 @@ namespace ECS
 		template<typename... TViewComponents>
 		class View
 		{
+		private:
+			friend class Iterator;
 		public:
+			class Iterator
+			{
+			public:
+				Iterator(Utils::Ref<EntityRegistry<TComponents...>> registry, size_t index) : m_Registry(registry), m_Index(index), m_Filter({})
+				{
+					Array<size_t, sizeof...(TViewComponents)> arr = {IndexOf<TViewComponents>()...};
+					for (size_t i = 0; i < arr.Size(); i++)
+						m_Filter.Set(arr[i], true);
+				}
+
+				Iterator(const Iterator&) = default;
+				Iterator& operator=(const Iterator&) = default;
+				Iterator(Iterator&&) = default;
+				Iterator& operator=(Iterator&&) = default;
+
+				Tuple<Utils::Ref<TViewComponents>...> operator*()
+				{
+					EntityData& componentData = m_Registry->m_ComponentDatas[m_Index];
+					return Tuple<Utils::Ref<TViewComponents>...>(Utils::Ref<TViewComponents>(componentData.Get().Get<IndexOf<TViewComponents>()>().Get())...);
+				}
+
+				Iterator& operator++()
+				{
+					while (m_Index < m_Registry->EntityCount())
+					{
+						m_Index++;
+						Optional<ComponentFlags> m_Flags = m_Registry->m_Entities[m_Index];
+						// if the current index is valid, and has all the components
+						if (m_Flags.HasValue() && (m_Flags.Get() & m_Filter).Any())
+							return *this;
+					}
+
+					return *this;
+				}
+
+				Iterator operator++(int)
+				{
+					Iterator it = *this;
+					++(*this);
+					return it;
+				}
+
+				friend bool operator== (const Iterator& a, const Iterator& b) { return a.m_Index == b.m_Index && a.m_Registry == b.m_Registry; };
+				friend bool operator!= (const Iterator& a, const Iterator& b) { return !(a == b); };
+
+			private:
+				size_t m_Index;
+				Utils::Ref<EntityRegistry<TComponents...>> m_Registry; 
+				BitSet<sizeof...(TComponents)> m_Filter;
+			};
+
+			View(Utils::Ref<EntityRegistry<TComponents...>> registry) :
+				m_Registry(registry)
+			{
+				
+			}
+
+			Iterator begin()
+			{
+				return Iterator(m_Registry, 0);
+			}
+
+			Iterator end()
+			{
+				return Iterator(m_Registry, m_Registry->EntityCount());
+			}
 
 		private:
 			Utils::Ref<EntityRegistry<TComponents...>> m_Registry;
 		};
+
+		template<typename... TViewComponents>
+		View<TViewComponents...> GetView()
+		{
+			return View<TViewComponents...>(*this);
+		}
 
 	private:
 		EntityId GetFirstInvalid()
@@ -134,7 +233,8 @@ namespace ECS
 		}
 
 	private:
-		List<EntityFlags> m_Entities;
-		List<EntityData> m_ComponentDatas;
+		List<EntityFlags> m_Entities = {};
+		List<EntityData> m_ComponentDatas = {};
+		size_t m_EntityCount = {};
 	};
 }

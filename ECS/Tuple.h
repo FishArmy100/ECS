@@ -13,7 +13,8 @@ namespace ECS
     template<typename T>
     struct TupleLeaf<T>
     {
-        TupleLeaf(T&& v) : Value(v) {}
+        template<typename TArg>
+        TupleLeaf(TArg&& v) : Value(std::forward<TArg>(v)) {}
         TupleLeaf() = default;
 
         T Value;
@@ -48,7 +49,8 @@ namespace ECS
     class Tuple : TupleLeaf<Args...>
     {
     public:
-        Tuple(Args&&... args) : TupleLeaf<Args...>(std::forward<Args>(args)...) {}
+        template<typename... CtorArgs>
+        Tuple(CtorArgs&&... args) : TupleLeaf<Args...>(std::forward<CtorArgs>(args)...) {}
 
         Tuple() = default;
         Tuple(const Tuple&) = default;

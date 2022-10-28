@@ -26,9 +26,6 @@
     <ClInclude Include="Tuple.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Optional.h">
       <Filter>Header Files</Filter>
     </ClInclude>

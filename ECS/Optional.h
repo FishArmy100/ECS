@@ -1,5 +1,4 @@
 #pragma once
-#include "Utils.h"
 #include <exception>
 #include <iostream>
 
@@ -62,7 +61,7 @@ namespace ECS
 
 		Optional(const Optional& other) : m_HasValue(other.m_HasValue)
 		{
-			if(other.m_HasValue)
+			if (other.m_HasValue)
 				new (reinterpret_cast<T*>(&m_Data)) T(other.Get());
 		}
 
@@ -101,6 +100,8 @@ namespace ECS
 			if (this == &other)
 				return *this;
 
+			std::string name = typeid(T).name();
+
 			if (other.m_HasValue)
 			{
 				if (m_HasValue)
@@ -119,8 +120,8 @@ namespace ECS
 			{
 				if (m_HasValue)
 				{
-					m_HasValue = false;
 					Get().~T();
+					m_HasValue = false;
 				}
 			}
 

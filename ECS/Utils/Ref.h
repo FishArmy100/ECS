@@ -8,32 +8,42 @@ namespace ECS
 		class Ref
 		{
 		public:
-			Ref(T* data) : m_Data(data) {}
 			Ref(T& dataRef) : m_Data(&dataRef) {}
-			Ref() : m_Data(nullptr) {}
-			Ref(const Ref<T>& other) = default;
+			Ref() = delete;
+			Ref(const Ref<T>&) = default; 
 			~Ref() = default;
-
-			bool IsNull() const { return m_Data == nullptr; }
-			bool IsNotNull() const { return m_Data != nullptr; }
 
 			T* Get() { return m_Data; }
 			const T* Get() const { return m_Data; }
 
 			T* operator->()
 			{
-				if (m_Data)
-					return m_Data;
-
-				return (T*)nullptr; // Tried to access a null value
+				return m_Data;
 			}
 
 			const T* operator->() const
 			{
-				if (m_Data)
-					return m_Data;
+				return m_Data;
+			}
 
-				return (T*)nullptr; // Tried to access a null value
+			const T& operator*() const
+			{
+				return *m_Data;
+			}
+
+			T& operator*()
+			{
+				return *m_Data;
+			}
+
+			bool operator==(const Ref& other) const
+			{
+				return m_Data == other.m_Data;
+			}
+
+			bool operator!=(const Ref& other) const
+			{
+				return m_Data != other.m_Data;
 			}
 
 		private:

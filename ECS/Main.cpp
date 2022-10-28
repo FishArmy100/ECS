@@ -1,6 +1,5 @@
 #include <iostream>
 #include "BitSet.h"
-#include "Utils.h"
 #include "Tuple.h"
 #include "Optional.h"
 #include "Array.h"
@@ -21,14 +20,10 @@ int main()
 {
 	std::cout << std::boolalpha;
 
-	/*EntityRegistry<std::string, Pos> list;
-	EntityId e = list.CreateEntity();
-	std::string& name = list.AddComponent<std::string>(e, "Hello World!");
-	std::cout << list.GetComponent<std::string>(e) << "\n";
-	list.RemoveComponent<std::string>(e);*/
+	EntityRegistry<std::string, Pos> list;
 
-	Tuple<std::string, int> t = Tuple<std::string, int>("Hello world!", 5);
-	auto& [m, i] = t;
-	m = "Goodbye!";
-	std::cout << t.Get<0>();
+	EntityId e1 = list.CreateEntity();
+	list.AddComponent<Pos>(e1);
+
+	list.DestroyEntity(e1);
 }

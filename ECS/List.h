@@ -8,7 +8,6 @@ namespace ECS
 	class List
 	{
 	public:
-		template<typename T>
 		class Iterator
 		{
 		public:
@@ -45,7 +44,7 @@ namespace ECS
 			pointer m_Ptr;
 		};
 
-		using iterator = Iterator<T>;
+		using iterator = Iterator;
 
 	public:
 		List() : m_Length(0), m_Capacity(0), m_Data(nullptr) {}

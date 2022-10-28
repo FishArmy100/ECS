@@ -31,13 +31,6 @@ namespace ECS
 
 	public:
 		BitSet() = default;
-		BitSet(bool values[GetByteCount()])
-		{
-			for (int i = 0; i < GetByteCount(); i++)
-			{
-				m_Bytes[i] = values[i];
-			}
-		}
 
 		BitSet(const BitSet&) = default;
 		BitSet& operator=(const BitSet&) = default;
