@@ -5,6 +5,7 @@
 #include "Array.h"
 #include "List.h"
 #include "EntityRegistry.h"
+#include "SFML/Graphics.hpp"
 
 using namespace ECS;
 using namespace ECS::Utils;
@@ -18,12 +19,21 @@ struct Pos
 
 int main()
 {
-	std::cout << std::boolalpha;
+    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
 
-	EntityRegistry<std::string, Pos> list;
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
 
-	EntityId e1 = list.CreateEntity();
-	list.AddComponent<Pos>(e1);
-
-	list.DestroyEntity(e1);
+        window.clear();
+        window.draw(shape);
+        window.display();
+    }
 }
