@@ -52,7 +52,7 @@ namespace ECS
 		};
 
 		template<typename... Types>
-		constexpr bool AreAllTypesUnique = AreAllTypesUnique<Types...>::Value;
+		constexpr bool AreAllTypesUnique = AllUniqueTypesInternal<Types...>::Value;
 
 		template<typename T>
 		struct IndexGetterInternal

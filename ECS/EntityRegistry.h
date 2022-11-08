@@ -111,7 +111,7 @@ namespace ECS
 		{
 			if (HasComponent<T>(e))
 			{
-				m_ComponentDatas[e].Get().Get<IndexOf<T>()>().Get().~T(); 
+				m_ComponentDatas[e].Get().Get<IndexOf<T>()>() = {};
 				m_Entities[e].Get().Set(IndexOf<T>(), false);
 			}
 			else
