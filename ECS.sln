@@ -5,6 +5,11 @@ VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ECS", "ECS\ECS.vcxproj", "{2E4D7EBA-B7E1-442D-B10C-FBA370F825E0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SFMLExamples", "SFMLExamples\SFMLExamples.vcxproj", "{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E4D7EBA-B7E1-442D-B10C-FBA370F825E0} = {2E4D7EBA-B7E1-442D-B10C-FBA370F825E0}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +26,14 @@ Global
 		{2E4D7EBA-B7E1-442D-B10C-FBA370F825E0}.Release|x64.Build.0 = Release|x64
 		{2E4D7EBA-B7E1-442D-B10C-FBA370F825E0}.Release|x86.ActiveCfg = Release|Win32
 		{2E4D7EBA-B7E1-442D-B10C-FBA370F825E0}.Release|x86.Build.0 = Release|Win32
+		{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}.Debug|x64.ActiveCfg = Debug|x64
+		{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}.Debug|x64.Build.0 = Debug|x64
+		{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}.Debug|x86.ActiveCfg = Debug|Win32
+		{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}.Debug|x86.Build.0 = Debug|Win32
+		{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}.Release|x64.ActiveCfg = Release|x64
+		{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}.Release|x64.Build.0 = Release|x64
+		{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}.Release|x86.ActiveCfg = Release|Win32
+		{C8B8529B-6FE0-4636-8A9D-795EF7308AEA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

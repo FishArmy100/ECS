@@ -40,7 +40,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
@@ -102,16 +102,18 @@
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>SFML_STATIC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\dev\3rd-Party\SFML-2.5.1\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\dev\3rd-Party\SFML-2.5.1\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;opengl32.lib;winmm.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,20 +133,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Array.h" />
-    <ClInclude Include="BitSet.h" />
-    <ClInclude Include="EntityRegistry.h" />
-    <ClInclude Include="EntityId.h" />
-    <ClInclude Include="List.h" />
-    <ClInclude Include="Optional.h" />
-    <ClInclude Include="Tuple.h" />
-    <ClInclude Include="Utils\Func.h" />
-    <ClInclude Include="Utils\Pair.h" />
-    <ClInclude Include="Utils\Ref.h" />
-    <ClInclude Include="Utils\TypeTraits.h" />
+    <ClInclude Include="src\Array.h" />
+    <ClInclude Include="src\BitSet.h" />
+    <ClInclude Include="src\ECS.h" />
+    <ClInclude Include="src\EntityRegistry.h" />
+    <ClInclude Include="src\EntityId.h" />
+    <ClInclude Include="src\List.h" />
+    <ClInclude Include="src\Optional.h" />
+    <ClInclude Include="src\Tuple.h" />
+    <ClInclude Include="src\Utils\Func.h" />
+    <ClInclude Include="src\Utils\Pair.h" />
+    <ClInclude Include="src\Utils\Ref.h" />
+    <ClInclude Include="src\Utils\TypeTraits.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

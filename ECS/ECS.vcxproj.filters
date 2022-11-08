@@ -15,42 +15,40 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="BitSet.h">
+    <ClInclude Include="src\BitSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tuple.h">
+    <ClInclude Include="src\Tuple.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Optional.h">
+    <ClInclude Include="src\Optional.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\TypeTraits.h">
+    <ClInclude Include="src\Utils\TypeTraits.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Func.h">
+    <ClInclude Include="src\Utils\Func.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Ref.h">
+    <ClInclude Include="src\Utils\Ref.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityRegistry.h">
+    <ClInclude Include="src\EntityRegistry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Array.h">
+    <ClInclude Include="src\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="List.h">
+    <ClInclude Include="src\List.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\Pair.h">
+    <ClInclude Include="src\Utils\Pair.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntityId.h">
+    <ClInclude Include="src\EntityId.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
