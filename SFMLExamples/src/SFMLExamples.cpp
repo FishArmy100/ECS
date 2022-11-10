@@ -1,36 +1,17 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include "EntityRegistry.h"
-#include "glm/vec2.hpp"
+#include "SFMLRenderer.h"
 
-enum class ShapeType
-{
-    Circle,
-    Square,
-};
-
-struct Transform
-{
-    glm::vec2 Pos;
-
-    Transform(const glm::vec2& pos) : 
-        Pos(pos) {}
-};
-
-struct Renderer
-{
-    sf::Color Color;
-    ShapeType Shape;
-
-    Renderer(sf::Color color, ShapeType shape) : 
-        Color(color), Shape(shape) {}
-};
+using namespace Examples;
 
 int main()
 {
     ECS::EntityRegistry<Transform, Renderer> registry = {};
-
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    auto renderer = SFMLRenderer(window, registry);
+
+
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
 
