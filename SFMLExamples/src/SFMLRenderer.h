@@ -19,11 +19,33 @@ namespace Examples
 		void Render(const sf::View& camera)
 		{
 			m_WindowRef->setView(camera);
+			m_WindowRef->clear();
 			auto entities = m_RegistryRef->GetView<Transform, Renderer>();
-			for (auto& [transform, renderer] : entities)
+			for (auto[transform, renderer] : entities)
 			{
-				
+				switch (renderer->Shape)
+				{
+				case ShapeType::Circle:
+				{
+					sf::CircleShape circle{ transform->Scale };
+					circle.setFillColor(renderer->Color);
+					circle.setPosition(transform->Pos);
+					m_WindowRef->draw(circle);
+					break;
+				}
+				case ShapeType::Square:
+				{
+					sf::RectangleShape square{ {transform->Scale, transform->Scale} };
+					square.setFillColor(renderer->Color);
+					square.setPosition(transform->Pos);
+					m_WindowRef->draw(square);
+					break;
+				}
+				default:
+					break;
+				}
 			}
+			m_WindowRef->display();
 		}
 
 	private:

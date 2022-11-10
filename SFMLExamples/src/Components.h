@@ -13,9 +13,10 @@ enum class ShapeType
 struct Transform
 {
     Vec2 Pos;
+    float Scale;
 
-    Transform(Vec2 pos) :
-        Pos(pos) {}
+    Transform(Vec2 pos, float scale) :
+        Pos(pos), Scale(scale) {}
 };
 
 struct Renderer

@@ -4,13 +4,14 @@
 #include "SFMLRenderer.h"
 
 using namespace Examples;
+using namespace ECS;
+using namespace ECS::Utils;
 
 int main()
 {
-    ECS::EntityRegistry<Transform, Renderer> registry = {};
+    EntityRegistry<Transform, Renderer> registry = {};
     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    auto renderer = SFMLRenderer(window, registry);
-
+    auto renderer = SFMLRenderer(Ref(window), Ref(registry));
 
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);

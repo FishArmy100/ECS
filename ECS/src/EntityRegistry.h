@@ -7,6 +7,7 @@
 #include "EntityId.h"
 #include "Utils/TypeTraits.h"
 #include "BitSet.h"
+#include "Optional.h"
 #include "Tuple.h"
 #include <iterator>
 
@@ -63,7 +64,7 @@ namespace ECS
 			return m_EntityCount;
 		}
 
-		template<typename T, typename... TArgs> 
+		template<typename T, typename... TArgs>
 		T& AddComponent(EntityId e, TArgs&&... args)
 		{
 			if (!HasComponent<T>(e))
@@ -109,11 +110,11 @@ namespace ECS
 		}
 
 		template<typename T>
-		void RemoveComponent(EntityId e) 
+		void RemoveComponent(EntityId e)
 		{
 			if (HasComponent<T>(e))
 			{
-				m_ComponentDatas[e].Get().Get<IndexOf<T>()>().Get().~T(); 
+				m_ComponentDatas[e].Get().Get<IndexOf<T>()>() = {};
 				m_Entities[e].Get().Set(IndexOf<T>(), false);
 			}
 			else
@@ -134,7 +135,7 @@ namespace ECS
 			public:
 				Iterator(Utils::Ref<EntityRegistry<TComponents...>> registry, size_t index) : m_Registry(registry), m_Index(index), m_Filter({})
 				{
-					Array<size_t, sizeof...(TViewComponents)> arr = {IndexOf<TViewComponents>()...};
+					Array<size_t, sizeof...(TViewComponents)> arr = { IndexOf<TViewComponents>()... };
 					for (size_t i = 0; i < arr.Size(); i++)
 						m_Filter.Set(arr[i], true);
 				}
@@ -176,14 +177,14 @@ namespace ECS
 
 			private:
 				size_t m_Index;
-				Utils::Ref<EntityRegistry<TComponents...>> m_Registry; 
+				Utils::Ref<EntityRegistry<TComponents...>> m_Registry;
 				BitSet<sizeof...(TComponents)> m_Filter;
 			};
 
 			View(Utils::Ref<EntityRegistry<TComponents...>> registry) :
 				m_Registry(registry)
 			{
-				
+
 			}
 
 			Iterator begin()
