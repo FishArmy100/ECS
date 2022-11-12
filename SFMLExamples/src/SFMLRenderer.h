@@ -27,9 +27,9 @@ namespace Examples
 				{
 				case ShapeType::Circle:
 				{
-					sf::CircleShape circle{ transform->Scale };
+					sf::CircleShape circle{ transform->Scale / 2 };
 					circle.setFillColor(renderer->Color);
-					circle.setPosition(transform->Pos);
+					circle.setPosition({ transform->Pos.x - transform->Scale / 2, -transform->Pos.y - transform->Scale / 2});
 					m_WindowRef->draw(circle);
 					break;
 				}
@@ -37,7 +37,7 @@ namespace Examples
 				{
 					sf::RectangleShape square{ {transform->Scale, transform->Scale} };
 					square.setFillColor(renderer->Color);
-					square.setPosition(transform->Pos);
+					square.setPosition({ transform->Pos.x, -transform->Pos.y });
 					m_WindowRef->draw(square);
 					break;
 				}

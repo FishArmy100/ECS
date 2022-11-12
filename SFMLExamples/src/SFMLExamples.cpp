@@ -2,19 +2,34 @@
 #include "SFML/Graphics.hpp"
 #include "EntityRegistry.h"
 #include "SFMLRenderer.h"
+#include <chrono>
 
 using namespace Examples;
 using namespace ECS;
 using namespace ECS::Utils;
 
+std::chrono::microseconds CurrentTime()
+{
+    using namespace std::chrono;
+    return duration_cast<milliseconds>(system_clock::now().time_since_epoch());
+}
+
 int main()
 {
     EntityRegistry<Transform, Renderer> registry = {};
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(860, 500), "SFML works!");
     auto renderer = SFMLRenderer(Ref(window), Ref(registry));
 
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
+
+
+    EntityId entity = registry.CreateEntity();
+    registry.AddComponent<Transform>(entity, Transform({ 0, 0 }, 100));
+    registry.AddComponent<Renderer>(entity, Renderer(sf::Color::Red, ShapeType::Circle));
+
+    sf::View view = { sf::Vector2f(0, 0), window.getDefaultView().getSize() };
+    auto time = std::chrono::high_resolution_clock::now();
 
     while (window.isOpen())
     {
@@ -24,10 +39,13 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        auto newTime = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float> delta = newTime - time;
+        time = newTime;
 
-        window.clear();
-        window.draw(shape);
-        window.display();
+        registry.GetComponent<Transform>(entity).Pos.x += delta.count() * 100;
+
+        renderer.Render(view);
     }
 
     return 0;
