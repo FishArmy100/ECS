@@ -34,7 +34,7 @@ namespace ECS
 		T&& Get()&&
 		{
 			if (m_HasValue)
-				return std::move(*reinterpret_cast<const T*>(&m_Data));
+				return std::move(*reinterpret_cast<T*>(&m_Data));
 			else
 				throw InvalidOptionalExeption("Cannot access invalid option");
 		}

@@ -45,6 +45,16 @@ namespace Examples
 					break;
 				}
 			}
+
+			auto boidView = m_RegistryRef->GetView<Transform, Boid>();
+			for (auto [transform, boid] : boidView)
+			{
+				sf::ConvexShape shape = boid->GetShape(transform->Scale, transform->Scale / 2);
+				shape.setFillColor(boid->BoidColor);
+				shape.setPosition({ transform->Pos.x, -transform->Pos.y });
+				m_WindowRef->draw(shape);
+			}
+
 			m_WindowRef->display();
 		}
 

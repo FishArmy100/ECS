@@ -93,6 +93,14 @@ namespace ECS
 			}
 		}
 
+		Optional<BitSet<NumberOfComponents()>> GetEntityFlags(EntityId e)
+		{
+			if (e < m_Entities.GetLength())
+				return m_Entities[e];
+
+			return {};
+		}
+
 		template<typename T>
 		bool HasComponent(EntityId e)
 		{
@@ -107,6 +115,12 @@ namespace ECS
 			{
 				throw NullEntityException();
 			}
+		}
+
+		template<typename... Ts>
+		bool HasComponents(EntityId e)
+		{
+			return (HasComponent<Ts>() && ...);
 		}
 
 		template<typename T>
@@ -138,6 +152,15 @@ namespace ECS
 					Array<size_t, sizeof...(TViewComponents)> arr = { IndexOf<TViewComponents>()... };
 					for (size_t i = 0; i < arr.Size(); i++)
 						m_Filter.Set(arr[i], true);
+
+					while (m_Index < m_Registry->EntityCount())
+					{
+						Optional<ComponentFlags> m_Flags = m_Registry->m_Entities[m_Index];
+						// if the current index is valid, and has all the components
+						if (m_Flags.HasValue() && !(m_Flags.Get() ^ m_Filter).Any())
+							break;
+						m_Index++;
+					}
 				}
 
 				Iterator(const Iterator&) = default;
@@ -158,7 +181,7 @@ namespace ECS
 						m_Index++;
 						Optional<ComponentFlags> m_Flags = m_Registry->m_Entities[m_Index];
 						// if the current index is valid, and has all the components
-						if (m_Flags.HasValue() && (m_Flags.Get() & m_Filter).Any())
+						if (m_Flags.HasValue() && !(m_Flags.Get() ^ m_Filter).Any())
 							return *this;
 					}
 

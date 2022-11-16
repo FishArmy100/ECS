@@ -134,7 +134,9 @@
     <ClCompile Include="src\SFMLExamples.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BoidController.h" />
     <ClInclude Include="src\Components.h" />
+    <ClInclude Include="src\RNG.h" />
     <ClInclude Include="src\SFMLRenderer.h" />
     <ClInclude Include="vendor\SFML\include\SFML\Audio.hpp" />
     <ClInclude Include="vendor\SFML\include\SFML\Audio\AlResource.hpp" />

@@ -2,6 +2,7 @@
 #include "SFML/Graphics.hpp"
 #include "EntityRegistry.h"
 #include "SFMLRenderer.h"
+#include "BoidController.h"
 #include <chrono>
 
 using namespace Examples;
@@ -16,20 +17,15 @@ std::chrono::microseconds CurrentTime()
 
 int main()
 {
-    EntityRegistry<Transform, Renderer> registry = {};
+    EntityRegistry<Transform, Renderer, Boid> registry = {};
     sf::RenderWindow window(sf::VideoMode(860, 500), "SFML works!");
     auto renderer = SFMLRenderer(Ref(window), Ref(registry));
 
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
-
-
-    EntityId entity = registry.CreateEntity();
-    registry.AddComponent<Transform>(entity, Transform({ 0, 0 }, 100));
-    registry.AddComponent<Renderer>(entity, Renderer(sf::Color::Red, ShapeType::Circle));
-
     sf::View view = { sf::Vector2f(0, 0), window.getDefaultView().getSize() };
     auto time = std::chrono::high_resolution_clock::now();
+
+    auto controller = BoidController(registry, view.getCenter(), view.getSize());
+    controller.SpawnBoids(20);
 
     while (window.isOpen())
     {
@@ -43,7 +39,7 @@ int main()
         std::chrono::duration<float> delta = newTime - time;
         time = newTime;
 
-        registry.GetComponent<Transform>(entity).Pos.x += delta.count() * 100;
+        std::cout << delta << "\n";
 
         renderer.Render(view);
     }

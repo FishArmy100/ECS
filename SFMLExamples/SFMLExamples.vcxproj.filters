@@ -320,6 +320,12 @@
     <ClInclude Include="src\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\BoidController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RNG.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\SFML\include\SFML\Audio\SoundFileFactory.inl">
