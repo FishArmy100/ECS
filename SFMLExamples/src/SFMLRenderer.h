@@ -38,6 +38,7 @@ namespace Examples
 					sf::RectangleShape square{ {transform->Scale, transform->Scale} };
 					square.setFillColor(renderer->Color);
 					square.setPosition({ transform->Pos.x, -transform->Pos.y });
+					square.setRotation(transform->Rot);
 					m_WindowRef->draw(square);
 					break;
 				}
@@ -52,6 +53,7 @@ namespace Examples
 				sf::ConvexShape shape = boid->GetShape(transform->Scale, transform->Scale / 2);
 				shape.setFillColor(boid->BoidColor);
 				shape.setPosition({ transform->Pos.x, -transform->Pos.y });
+				shape.setRotation(transform->Rot);
 				m_WindowRef->draw(shape);
 			}
 

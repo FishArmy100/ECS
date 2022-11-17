@@ -15,10 +15,11 @@ enum class ShapeType
 struct Transform
 {
     Vec2 Pos;
+    float Rot;
     float Scale;
 
-    Transform(Vec2 pos, float scale) :
-        Pos(pos), Scale(scale) {}
+    Transform(Vec2 pos, float rot, float scale) :
+        Pos(pos), Rot(rot), Scale(scale) {}
 };
 
 struct Renderer
@@ -40,8 +41,11 @@ struct Boid
 {
     Color BoidColor;
     Vec2 Velocity;
-    float MaxVelocity;
-    Boid(Color color, Vec2 velocity, float maxVelocity) : BoidColor(color), Velocity(velocity), MaxVelocity(maxVelocity) {}
+    float DesiredVelocity;
+    float Vision;
+    Boid(Color color, Vec2 velocity, float desiredVelocity, float vision) : 
+        BoidColor(color), Velocity(velocity), 
+        DesiredVelocity(desiredVelocity), Vision(vision) {}
 
     static sf::ConvexShape GetShape(float length, float width)
     {
@@ -55,18 +59,24 @@ struct Boid
 
 struct Coherence
 {
-    const float Value;
+    float Value;
     Coherence(float value) : Value(value) {}
+};
+
+struct AvoidWalls
+{
+    float Value;
+    AvoidWalls(float value) : Value(value) {}
 };
 
 struct Seperation
 {
-    const float Value;
+    float Value;
     Seperation(float value) : Value(value) {}
 };
 
 struct Alignment
 {
-    const float Value;
+    float Value;
     Alignment(float value) : Value(value) {}
 };

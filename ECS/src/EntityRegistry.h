@@ -155,9 +155,10 @@ namespace ECS
 
 					while (m_Index < m_Registry->EntityCount())
 					{
-						Optional<ComponentFlags> m_Flags = m_Registry->m_Entities[m_Index];
+						Optional<ComponentFlags> flags = m_Registry->m_Entities[m_Index];
+
 						// if the current index is valid, and has all the components
-						if (m_Flags.HasValue() && !(m_Flags.Get() ^ m_Filter).Any())
+						if (flags.HasValue() && (flags.Get() & m_Filter) == m_Filter)
 							break;
 						m_Index++;
 					}
@@ -179,9 +180,9 @@ namespace ECS
 					while (m_Index < m_Registry->EntityCount())
 					{
 						m_Index++;
-						Optional<ComponentFlags> m_Flags = m_Registry->m_Entities[m_Index];
+						Optional<ComponentFlags> flags = m_Registry->m_Entities[m_Index];
 						// if the current index is valid, and has all the components
-						if (m_Flags.HasValue() && !(m_Flags.Get() ^ m_Filter).Any())
+						if (flags.HasValue() && (flags.Get() & m_Filter) == m_Filter)
 							return *this;
 					}
 

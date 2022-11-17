@@ -17,15 +17,25 @@ std::chrono::microseconds CurrentTime()
 
 int main()
 {
-    EntityRegistry<Transform, Renderer, Boid> registry = {};
-    sf::RenderWindow window(sf::VideoMode(860, 500), "SFML works!");
+    EntityRegistry<Transform, Renderer, Boid, AvoidWalls, Seperation, Alignment, Coherence> registry = {};
+    sf::RenderWindow window(sf::VideoMode(1500, 900), "SFML works!");
     auto renderer = SFMLRenderer(Ref(window), Ref(registry));
 
     sf::View view = { sf::Vector2f(0, 0), window.getDefaultView().getSize() };
     auto time = std::chrono::high_resolution_clock::now();
 
-    auto controller = BoidController(registry, view.getCenter(), view.getSize());
-    controller.SpawnBoids(20);
+    BoidSpawnData spawnData =
+    {
+        20.0f,
+        Boid(Color::Red, {0, 20.0f}, 60.0f, 20.0f),
+        AvoidWalls(1000.0f),
+        Alignment(10.0f),
+        Coherence(30.0f),
+        Seperation(10.0f)
+    };
+
+    auto controller = BoidController(registry, view.getCenter(), view.getSize(), 20.0f);
+    controller.SpawnBoids(100, spawnData);
 
     while (window.isOpen())
     {
@@ -39,8 +49,7 @@ int main()
         std::chrono::duration<float> delta = newTime - time;
         time = newTime;
 
-        std::cout << delta << "\n";
-
+        controller.Update(delta.count() * 3);
         renderer.Render(view);
     }
 

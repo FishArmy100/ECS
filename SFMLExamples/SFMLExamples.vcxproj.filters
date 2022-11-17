@@ -326,6 +326,9 @@
     <ClInclude Include="src\RNG.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\BoidSpawnData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\SFML\include\SFML\Audio\SoundFileFactory.inl">
