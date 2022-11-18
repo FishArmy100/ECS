@@ -60,7 +60,8 @@ struct Boid
 struct Coherence
 {
     float Value;
-    Coherence(float value) : Value(value) {}
+    float VisionMultiplier;
+    Coherence(float value, float visionMultiplier) : Value(value), VisionMultiplier(visionMultiplier) {}
 };
 
 struct AvoidWalls

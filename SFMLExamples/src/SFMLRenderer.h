@@ -16,10 +16,8 @@ namespace Examples
 	public:
 		SFMLRenderer(WindowRef window, RegistryRef registry) : m_WindowRef(window), m_RegistryRef(registry) {}
 
-		void Render(const sf::View& camera)
+		void Render()
 		{
-			m_WindowRef->setView(camera);
-			m_WindowRef->clear();
 			auto entities = m_RegistryRef->GetView<Transform, Renderer>();
 			for (auto[transform, renderer] : entities)
 			{
@@ -56,8 +54,6 @@ namespace Examples
 				shape.setRotation(transform->Rot);
 				m_WindowRef->draw(shape);
 			}
-
-			m_WindowRef->display();
 		}
 
 	private:

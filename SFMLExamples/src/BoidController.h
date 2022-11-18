@@ -37,6 +37,8 @@ public:
 			float x = rng.Range(-m_Size.x / 2 + m_Margin, m_Size.x / 2 - m_Margin) + m_Center.x;
 			float y = rng.Range(-m_Size.y / 2 + m_Margin, m_Size.y / 2 - m_Margin) + m_Center.y;
 
+			Vec2 startVelocity = { rng.Range(-1.0f, 1.0f), rng.Range(-1.0f, 1.0f) };
+
 			EntityId e = m_Registry->CreateEntity();
 			m_Registry->AddComponent<Transform>(e, Transform({ x, y }, 0, boidSpawnData.Size));
 			m_Registry->AddComponent<Boid>(e, boidSpawnData.BoidData);
@@ -44,6 +46,8 @@ public:
 			m_Registry->AddComponent<Seperation>(e, boidSpawnData.SeperationData);
 			m_Registry->AddComponent<Alignment>(e, boidSpawnData.AlighmentData);
 			m_Registry->AddComponent<Coherence>(e, boidSpawnData.CoherenceData);
+
+			m_Registry->GetComponent<Boid>(e).Velocity += startVelocity; // ???
 		}
 	}
 
@@ -62,15 +66,15 @@ public:
 	void GroupTogether(float delta)
 	{
 		auto selfView = m_Registry->GetView<Transform, Boid, Coherence>();
-		auto alignmentView = m_Registry->GetView<Transform>();
+		auto coherenceView = m_Registry->GetView<Transform>();
 		for (auto [transform, boid, coherence] : selfView)
 		{
 			Vec2 avgPos = {};
 			int neighborCount = 0;
 
-			for (auto [otherTransform] : alignmentView)
+			for (auto [otherTransform] : coherenceView)
 			{
-				if (otherTransform == transform || SquareDistance(transform->Pos, otherTransform->Pos) > boid->Vision * boid->Vision)
+				if (otherTransform == transform || SquareDistance(transform->Pos, otherTransform->Pos) > boid->Vision * boid->Vision * coherence->VisionMultiplier)
 					continue;
 
 				avgPos += otherTransform->Pos;

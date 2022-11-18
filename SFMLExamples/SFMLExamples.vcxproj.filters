@@ -359,4 +359,7 @@
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="vendor\ARIAL.TTF" />
+  </ItemGroup>
 </Project>
